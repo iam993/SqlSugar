@@ -13,9 +13,11 @@ namespace SqlSugar
         Task<T> ExecuteReturnEntityAsync();
 
         Task<List<T>> ExecuteReturnListAsync();
+        Task<List<T>> ExecuteReturnEntityListAsync();
         int ExecuteCommand();
         T ExecuteReturnEntity();
         List<T> ExecuteReturnList();
+        List<T> ExecuteReturnEntityList();
         ISaveable<T> InsertColumns(Expression<Func<T, object>> columns);
         ISaveable<T> InsertIgnoreColumns(Expression<Func<T, object>> columns);
         ISaveable<T> UpdateColumns(Expression<Func<T, object>> columns);
