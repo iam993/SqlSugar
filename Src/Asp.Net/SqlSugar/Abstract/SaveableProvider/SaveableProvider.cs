@@ -108,7 +108,7 @@ namespace SqlSugar
                 updateable.ExecuteCommand();
             return saveObjects.First();
         }
-
+        
         public List<T> ExecuteReturnList()
         {
             LoadInsertable();
@@ -119,6 +119,18 @@ namespace SqlSugar
                 updateable.ExecuteCommand();
             return saveObjects;
         }
+        
+        public List<T> ExecuteReturnEntityList()
+        {
+            this.LoadInsertable();
+            this.LoadUpdateable();
+            if (this.insertable != null)
+                this.insertable.ExecuteCommandIdentityIntoEntity();
+            if (this.updateable != null)
+                this.updateable.ExecuteCommand();
+            return this.saveObjects;
+        }
+        
         #endregion
         #region Core Async
         public Task<int> ExecuteCommandAsync()
@@ -134,6 +146,11 @@ namespace SqlSugar
         public Task<List<T>> ExecuteReturnListAsync()
         {
             return Task.FromResult(ExecuteReturnList());
+        }
+        
+        public Task<List<T>> ExecuteReturnEntityListAsync()
+        {
+            return Task.FromResult(ExecuteReturnEntityList());
         }
         #endregion
         public ISaveable<T> InsertColumns(Expression<Func<T, object>> columns)
